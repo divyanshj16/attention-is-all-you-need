@@ -1,17 +1,25 @@
 import spacy
+from collections import Counter
+import os
 
-ent = spacy.load('en')
-# def make_vocab():
+f_en = './dataset/de-en/train.tags.de-en.en'
+f_de = './dataset/de-en/train.tags.de-en.de'
 
-
-file_name = './dataset/de-en/train.tags.de-en.en'
-
-with open(file_name) as f:
-	text = f.read()
-	temp = text[500:1000]
-	doc = ent(temp)
-	print(doc.to_array(doc.vocab))
-	# for w in doc: print(w.text,w.pos_)
-	# print(doc)
-
-	# new_text = regex.sub("[^\s\p{Latin}']", "", text)
+def create_vocab(inp,op,ln):
+    nlp = spacy.load(ln)
+    with open(inp) as f:
+        text = f.read()
+        doc = nlp.tokenizer(text)
+        doc = [str(i) for i in list(doc)]
+        cntr = Counter(doc)
+        if not os.path.exists('vocab'): os.mkdir('vocab')
+        with open(f'vocab/{op}','w') as fo:
+            fo.write("{}\t1000\n{}\t1000\n{}\t1000\n{}\t1000\n".format("<PAD>", "<UNK>", "<S>", "</S>"))
+            for word, cnt in cntr.most_common(len(cntr)):
+                fo.write(f'{word}\t{cnt}\n')
+                
+if __name__ == '__main__':
+    create_vocab(f_en,'en.vocab','en')
+    create_vocab(f_de,'de.vocab','de')
+    print("Vocab Created!!")
+    
