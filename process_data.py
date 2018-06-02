@@ -5,7 +5,7 @@ import os
 f_en = './dataset/de-en/train.tags.de-en.en'
 f_de = './dataset/de-en/train.tags.de-en.de'
 
-def create_vocab(inp,op,ln):
+def create_vocab_from_file(inp,op,ln):
     nlp = spacy.load(ln)
     with open(inp) as f:
         text = f.read()
@@ -19,7 +19,7 @@ def create_vocab(inp,op,ln):
                 fo.write(f'{word}\t{cnt}\n')
                 
 if __name__ == '__main__':
-    create_vocab(f_en,'en.vocab','en')
-    create_vocab(f_de,'de.vocab','de')
+    create_vocab_from_file(f_en,'en.vocab','en')
+    # create_vocab_from_file(f_de,'de.vocab','de')
     print("Vocab Created!!")
     
