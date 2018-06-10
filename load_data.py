@@ -73,7 +73,7 @@ def create_data(source_sentences, target_sentences):
 	for sour_sen, tar_sen in zip(source_sentences,target_sentences):
 		x = [sour2idx.get(str(word),1) for word in list(source_tokenizer(sour_sen))]
 		y = [tar2idx.get(str(word),1) for word in list(target_tokenizer(tar_sen))]
-		x += [3]
+		x += [3] # adding </s> character to show end of line
 		y += [3]
 		if max(len(x), len(y)) <= max_len:
 			x += [0] * (max_len - len(x))
