@@ -7,6 +7,18 @@ from torch.autograd import Variable
 import numpy as np
 import pickle
 
+# constants
+N = 6 # Number of layers
+dmodel = 512 # dimension of Sublayer o/p,embedding layer o/p
+h = 8 # number of head for multi head attention
+dk = dmodel//h # dimension of key vector
+dv = dmodel//h # dimension of value vector
+dff = 2048 # dimension of feed forward network
+vocab_size_source = 10871 # vocab size of most frequent words from the dataset(english)
+vocab_size_target = 12478 # vocab size of most frequent words from the dataset(german)
+bs = 64 # batch size
+T = 20 # time step
+
 class layer_norm(nn.Module):
     def __init__(self,n_f,eps=1e-9):
         super().__init__()
